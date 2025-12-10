@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from 'react';
+import { useDispatch } from "react-redux";
 
 import { addItem } from "./CartSlice";
 
@@ -8,6 +8,8 @@ import CartItem from './CartItem';
 import './ProductList.css'
 
 function ProductList({ onHomeClick }) {
+    const dispatch = useDispatch();
+
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false);
 
@@ -307,9 +309,9 @@ function ProductList({ onHomeClick }) {
                                             <img className="product-image" src={plant.image} alt={plant.name}/>
                                             <div className="product-title">{plant.name}</div>
                                             <div className="product-description">{plant.description}</div>
-                                            <div className="product-cost">${plant.cost}</div>
-                                            <button className="product-button" onClick={() => handleAddToCart(plant)}>
-                                                Add to Cart
+                                            <div className="product-cost">{plant.cost}</div>
+                                            <button className={(addedToCart[plant.name]) ? "product-button btn-disabled" : "product-button"} disabled={addedToCart[plant.name]} onClick={() => handleAddToCart(plant)}>
+                                                {(addedToCart[plant.name]) ? "Added to Cart" : "Add to Cart"}
                                             </button>
                                         </div>
                                     ))}
